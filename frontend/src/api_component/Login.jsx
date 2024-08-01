@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -17,10 +17,8 @@ export default function Login() {
         password,
       });
 
-      // Simpan token di localStorage atau state global (contoh: Redux)
       localStorage.setItem("token", response.data.data.token);
 
-      // Redirect ke halaman utama setelah login berhasil
       navigate("/");
     } catch (error) {
       if (error.response) {
@@ -86,9 +84,12 @@ export default function Login() {
           </button>
           <div className="text-sm font-medium text-gray-900 dark:text-white">
             Not registered yet?{" "}
-            <a className="text-blue-600 hover:underline dark:text-blue-500">
+            <Link
+              to="/register"
+              className="text-blue-600 hover:underline dark:text-blue-500"
+            >
               Create account
-            </a>
+            </Link>
           </div>
         </form>
       </div>

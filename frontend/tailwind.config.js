@@ -7,7 +7,11 @@ export default {
     "node_modules/flowbite-react/lib/esm/**/*.js",
   ],
   theme: {
-    extend: {},
+    extend: {
+      // screens: {
+      //   sm: "480px",
+      // },
+    },
   },
   plugins: [require("flowbite/plugin")],
 };
