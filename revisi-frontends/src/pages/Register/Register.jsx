@@ -1,13 +1,14 @@
-import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Registers } from "../../assets/IndexAssets";
+import axios from "axios";
 
 export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [role, setRole] = useState("student"); // Default role
+  const [role, setRole] = useState("student"); // state Default role
   const [message, setMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false); // Popup state
   const [success, setSuccess] = useState(null);
@@ -25,15 +26,16 @@ export default function Register() {
     }
 
     try {
+      // eslint-disable-next-line no-unused-vars
       const response = await axios.post("http://127.0.0.1:8000/api/register", {
         name,
         email,
         password,
         password_confirmation: passwordConfirmation,
-        role, // Menyertakan role
+        role,
       });
 
-      console.log("result data: ", response);
+      // console.log("result data: ", response);
 
       setMessage("Registration successful");
       setSuccess(true);
@@ -45,9 +47,6 @@ export default function Register() {
       setPasswordConfirmation("");
 
       // Menuju ke halaman login setelah 1 detik
-      setTimeout(() => {
-        navigate("/login");
-      }, 1000);
     } catch (error) {
       if (error.response) {
         const errorMessage = error.response.data.message;
@@ -71,15 +70,14 @@ export default function Register() {
     }
   };
 
-  const closePopup = () => {
-    setShowPopup(false);
-  };
-
   return (
     <>
-      <div className="flex justify-center items-center min-h-screen">
+      <div
+        className="flex justify-center items-center p-2 min-h-screen bg-cover bg-center object-cover"
+        style={{ backgroundImage: `url(${Registers})` }}
+      >
         <form
-          className="mt-8 space-y-6 w-[550px] p-4 shadow-2xl"
+          className="mt-8 space-y-6 w-[550px] p-4 shadow-2xl rounded-md bg-white bg-opacity-80"
           onSubmit={handleSubmit}
         >
           <h1 className="font-semibold text-2xl mb-3">Register Form</h1>
@@ -171,12 +169,20 @@ export default function Register() {
               <option value="teacher">Teacher</option>
             </select>
           </div>
-          <button
-            type="submit"
-            className="w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Register
-          </button>
+          <div className="flex justify-center items-center flex-col gap-y-8">
+            <button
+              type="submit"
+              className="w-full px-20 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Register
+            </button>
+            <button
+              onClick={() => navigate("/login")}
+              className="font-medium text-slate-500 text-base hover:underline"
+            >
+              Back
+            </button>
+          </div>
         </form>
       </div>
 
@@ -189,10 +195,16 @@ export default function Register() {
             </h2>
             <p>{message}</p>
             <button
-              onClick={closePopup}
+              onClick={() => {
+                if (success) {
+                  setShowPopup(navigate("/login"));
+                } else {
+                  setShowPopup(false);
+                }
+              }}
               className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
             >
-              Close
+              {success ? "Oke" : "Close"}
             </button>
           </div>
         </div>
