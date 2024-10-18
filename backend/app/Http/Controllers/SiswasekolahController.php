@@ -17,11 +17,17 @@ class SiswasekolahController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|string|max:255',
+            'nama_student' => 'required|string|max:255',
             'nis' => 'required|string|max:255|unique:siswasekolah',
             'email' => 'required|string|email|max:255|unique:siswasekolah',
             'tanggal_lahir' => 'required|date',
             'alamat' => 'required|string',
+            'jurusan' => 'required|string',
+            'jenis_kelamin' => 'required|string',
+            'nomber_telpon' => 'required|string',
+            'tingkat_pendidikan' => 'required|string',
+            'matapelajaran' => 'required|string',
+            'orangtua' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -40,11 +46,17 @@ class SiswasekolahController extends Controller
     public function update(Request $request, Siswasekolah $siswasekolah)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|string|max:255',
+            'nama_student' => 'required|string|max:255',
             'nis' => 'required|string|max:255|unique:siswasekolah,nis,'.$siswasekolah->id,
             'email' => 'required|string|email|max:255|unique:siswasekolah,email,'.$siswasekolah->id,
             'tanggal_lahir' => 'required|date',
             'alamat' => 'required|string',
+            'jurusan' => 'required|string',
+            'jenis_kelamin' => 'required|string',
+            'nomber_telpon' => 'required|string',
+            'tingkat_pendidikan' => 'required|string',
+            'matapelajaran' => 'required|string',
+            'orangtua' => 'required|string',
         ]);
 
         if ($validator->fails()) {

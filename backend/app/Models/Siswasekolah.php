@@ -9,13 +9,19 @@ class Siswasekolah extends Model
 {
     use HasFactory;
 
-    protected $table = 'siswasekolah'; // Tambahkan ini untuk menyesuaikan dengan nama tabel yang benar
+    protected $table = 'siswasekolah';
 
     protected $fillable = [
-        'nama',
+        'nama_student',
         'nis',
         'email',
         'tanggal_lahir',
         'alamat',
+        'jurusan',
+        'jenis_kelamin',
+        'nomber_telpon',
+        'tingkat_pendidikan',
+        'matapelajaran',
+        'orangtua',
     ];
 }

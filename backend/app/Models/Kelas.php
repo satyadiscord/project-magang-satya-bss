@@ -10,9 +10,11 @@ class Kelas extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama',
-        'jumlah_siswa',
+        'nama_siswa',
         'guru_pengajar',
-        'mapel_kelas',
+        'matapelajaran',
+        'semester',
+        'pendidikan',
+        'lokasi_kelas',
     ];
 }

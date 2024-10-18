@@ -10,13 +10,27 @@ class CreateKelasTable extends Migration
     {
         Schema::create('kelas', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->integer('jumlah_siswa');
+            $table->string('nama_siswa');
             $table->string('guru_pengajar');
-            $table->string('mapel_kelas');
+            $table->string('matapelajaran');
+            $table->string('semester');
+            $table->string('pendidikan');
+            $table->string('lokasi_kelas');
             $table->timestamps();
         });
     }
+
+    /* 
+        {
+    "nama_siswa": "miyaaa",
+    "guru_pengajar": "bapak jonson",
+    "matapelajaran": "ipa",
+    "semester": 1,
+    "pendidikan": "smp",
+    "lokasi_kelas": "aula"
+}
+
+    */
 
     public function down()
     {

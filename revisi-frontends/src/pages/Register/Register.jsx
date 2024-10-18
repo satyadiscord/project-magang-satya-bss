@@ -8,20 +8,23 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [role, setRole] = useState("student"); // state Default role
+  const [role, setRole] = useState("student");
   const [message, setMessage] = useState("");
-  const [showPopup, setShowPopup] = useState(false); // Popup state
+  const [showPopup, setShowPopup] = useState(false);
   const [success, setSuccess] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate(); // Hook untuk navigasi
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     // Validasi password
     if (password !== passwordConfirmation) {
       setMessage("Passwords do not match");
-      setShowPopup(true); // Tampilkan popup
+      setShowPopup(true);
+      setIsLoading(false);
       return;
     }
 
@@ -39,7 +42,8 @@ export default function Register() {
 
       setMessage("Registration successful");
       setSuccess(true);
-      setShowPopup(true); // Tampilkan popup sukses
+      setShowPopup(true);
+      setIsLoading(false);
 
       setName("");
       setEmail("");
@@ -60,13 +64,14 @@ export default function Register() {
           setMessage(errorMessage || "An error occurred");
         }
 
-        setSuccess(false); // Menyatakan registrasi gagal
-        setShowPopup(true); // Tampilkan popup error
+        setSuccess(false);
+        setShowPopup(true);
       } else {
         setMessage("Network error");
-        setSuccess(false); // Menyatakan ada error jaringan
-        setShowPopup(true); // Tampilkan popup error
+        setSuccess(false);
+        setShowPopup(true);
       }
+      setIsLoading(false);
     }
   };
 
@@ -127,7 +132,7 @@ export default function Register() {
             <input
               type="password"
               id="password"
-              placeholder="••••••••"
+              placeholder="********"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -144,7 +149,7 @@ export default function Register() {
             <input
               type="password"
               id="confirmation"
-              placeholder="••••••••"
+              placeholder="********"
               required
               value={passwordConfirmation}
               onChange={(e) => setPasswordConfirmation(e.target.value)}
@@ -172,9 +177,10 @@ export default function Register() {
           <div className="flex justify-center items-center flex-col gap-y-8">
             <button
               type="submit"
-              className="w-full px-20 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              disabled={isLoading}
             >
-              Register
+              {isLoading ? "Register..." : "Register account"}{" "}
             </button>
             <button
               onClick={() => navigate("/login")}

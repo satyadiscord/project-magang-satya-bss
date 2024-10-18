@@ -10,13 +10,24 @@ class CreateMataKuliahsTable extends Migration
     {
         Schema::create('mata_kuliahs', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('jadwal_kelas');
-            $table->string('guru_pengajar');
+            $table->string('nama_matapelajaran');
+            $table->string('hari');
+            $table->string('nama_guru');
+            $table->string('ruang_kelas');
+            $table->string('metode_pembelajaran');
             $table->text('deskripsi')->nullable();
             $table->timestamps();
         });
     }
+
+    /*
+    "nama_matapelajaran": "sejarah",
+    "hari": "selasa",
+    "nama_guru": "ibu tania",
+    "ruang_kelas": "aula",
+    "metode_pembelajaran": "praktek",
+    "deskripsi": "semoga hari ini saya mendapatkan nilai yang memuaskan"
+    */
 
     public function down()
     {

@@ -6,16 +6,24 @@ import {
   MataPelajaran,
   ProfilUser,
   Register,
+  ReqKelas,
   Student,
 } from "./pages/IndexPages.jsx";
+
 import {
   CreateEditKelas,
-  CreateEditMapel,
-  CreateEditStudent,
   TambahKelas,
+  CreateEditMapel,
   TambahMapel,
-  TambahStudent,
+  CreateEditStudent,
+  TambahStudet,
 } from "./CreateEditFormCRUD/IndexCreateEdit.jsx";
+
+import {
+  KelasDetail,
+  MapelDetail,
+  StudentDetail,
+} from "./Detail/indexDetail.jsx";
 import MainApp from "./pages/MainApp/MainApp.jsx";
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -34,8 +42,12 @@ export default function App() {
           >
             <Route index element={<Dashboard />} />
             <Route path="/kelas" element={<Kelas />} />
-            <Route path="/mataPelajaran" element={<MataPelajaran />} />
+            <Route path="/matapelajaran" element={<MataPelajaran />} />
             <Route path="/student" element={<Student />} />
+            <Route path="/request-kelas" element={<ReqKelas />} />
+            <Route path="/detail-kelas" element={<KelasDetail />} />
+            <Route path="/detail-matapelajaran" element={<MapelDetail />} />
+            <Route path="/detail-student" element={<StudentDetail />} />
           </Route>
 
           {/* Routes di luar mainApp */}
@@ -44,15 +56,12 @@ export default function App() {
           <Route path="/login" element={<Login />} />
 
           {/* Crud routing */}
-          <Route path="/tambahKelas" element={<TambahKelas />} />
-          <Route path="/createEditKelas/:id" element={<CreateEditKelas />} />
-          <Route path="/tambahMapel" element={<TambahMapel />} />
-          <Route path="/createEditMapel/:id" element={<CreateEditMapel />} />
-          <Route path="/tambahStudent" element={<TambahStudent />} />
-          <Route
-            path="/createEditStudent/:id"
-            element={<CreateEditStudent />}
-          />
+          <Route path="/tambah-kelas" element={<TambahKelas />} />
+          <Route path="/edit-kelas/:id" element={<CreateEditKelas />} />
+          <Route path="/tambah-mapel" element={<TambahMapel />} />
+          <Route path="/edit-mapel/:id" element={<CreateEditMapel />} />
+          <Route path="/tambah-student" element={<TambahStudet />} />
+          <Route path="/edit-student/:id" element={<CreateEditStudent />} />
         </Routes>
       </Router>
     </>

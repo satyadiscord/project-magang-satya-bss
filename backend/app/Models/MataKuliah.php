@@ -10,9 +10,11 @@ class MataKuliah extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama',
-        'jadwal_kelas',
-        'guru_pengajar',
+        'nama_matapelajaran',
+        'hari',
+        'nama_guru',
+        'ruang_kelas',
+        'metode_pembelajaran',
         'deskripsi',
     ];
 }

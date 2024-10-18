@@ -4,6 +4,7 @@ import Kelas from "./Kelas/Kelas";
 import MataPelajaran from "./MataPelajaran/MataPelajaran";
 import ProfilUser from "./ProfilUser/ProfilUser";
 import Student from "./Student/Student";
+import ReqKelas from "./ReqKelas/ReqKelas";
 
 // authentication
 import Login from "./Login/Login";
@@ -15,6 +16,7 @@ export {
   MataPelajaran,
   ProfilUser,
   Student,
+  ReqKelas,
   Login,
   Register,
 };

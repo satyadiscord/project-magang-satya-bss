@@ -8,12 +8,13 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [showNotification, setShowNotification] = useState(false);
-  const [notificationType, setNotificationType] = useState("success"); // Untuk menentukan tipe notifikasi
-
-  const navigate = useNavigate(); // navigate router dom
+  const [notificationType, setNotificationType] = useState("success");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/login", {
@@ -23,28 +24,28 @@ export default function Login() {
 
       localStorage.setItem("token", response.data.data.token);
 
-      // Notifikasi berhasil
       setMessage("Login successful!");
-      setNotificationType("success"); // Set tipe notifikasi ke success
+      setNotificationType("success");
       setShowNotification(true);
 
       setTimeout(() => {
         setShowNotification(false);
+        setIsLoading(false);
         navigate("/");
       }, 2000);
     } catch (error) {
+      setIsLoading(false);
       if (error.response) {
         setMessage(error.response.data.message || "An error occurred");
       } else {
         setMessage("Network error");
       }
-      // Notifikasi gagal
-      setNotificationType("error"); // Set tipe notifikasi ke error
+      setNotificationType("error");
       setShowNotification(true);
 
       setTimeout(() => {
         setShowNotification(false);
-      }, 3000); // Pop-up tampil selama 3 detik
+      }, 3000);
     }
   };
 
@@ -91,7 +92,7 @@ export default function Login() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              placeholder="********"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
             />
@@ -99,8 +100,9 @@ export default function Login() {
           <button
             type="submit"
             className="w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            disabled={isLoading}
           >
-            Login to your account
+            {isLoading ? "Logging in..." : "Login to your account"}{" "}
           </button>
           <div className="text-sm font-medium text-gray-900 dark:text-white">
             Not registered yet?{" "}

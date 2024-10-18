@@ -21,10 +21,12 @@ class KelasController extends Controller
     {
         try {
             $request->validate([
-                'nama' => 'required|string|max:255',
-                'jumlah_siswa' => 'required|integer',
-                'guru_pengajar' => 'required|string|max:255',
-                'mapel_kelas' => 'nullable|string',
+                'nama_siswa' => 'required|string|max:255',
+                'guru_pengajar' => 'required|string',
+                'matapelajaran' => 'required|string',
+                'semester' => 'required|string',
+                'pendidikan' => 'required|string',
+                'lokasi_kelas' => 'required|string',
             ]);
 
             $kelas = Kelas::create($request->all());
@@ -58,10 +60,12 @@ class KelasController extends Controller
     {
         try {
             $request->validate([
-                'nama' => 'required|string|max:255',
-                'jumlah_siswa' => 'required|integer',
-                'guru_pengajar' => 'required|string|max:255',
-                'mapel_kelas' => 'nullable|string',
+                'nama_siswa' => 'required|string|max:255',
+                'guru_pengajar' => 'required|string',
+                'matapelajaran' => 'required|string',
+                'semester' => 'required|string',
+                'pendidikan' => 'required|string',
+                'lokasi_kelas' => 'required|string',
             ]);
 
             $kelas = Kelas::find($id);

@@ -2,6 +2,7 @@ import { PiStudent } from "react-icons/pi"; // ic student
 import { SiGoogleclassroom } from "react-icons/si"; // ic kelas
 import { IoBookOutline } from "react-icons/io5"; // ic mata pelajaran
 import { IoHomeOutline } from "react-icons/io5"; // ic home
+import { IoMdPersonAdd } from "react-icons/io"; // ic request kelas
 
 export const sidebarList = [
   {
@@ -23,5 +24,10 @@ export const sidebarList = [
     name: "Student",
     list_icons: <PiStudent size={30} />,
     link_navigate: "/student",
+  },
+  {
+    name: "Request Kelas",
+    list_icons: <IoMdPersonAdd size={30} />,
+    link_navigate: "/request-kelas",
   },
 ];

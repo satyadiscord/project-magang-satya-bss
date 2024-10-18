@@ -18,9 +18,11 @@ class MataKuliahController extends Controller
         try {
             //code...
             $request->validate([
-                'nama' => 'required|string|max:255',
-                'jadwal_kelas' => 'required|string|max:255',
-                'guru_pengajar' => 'required|string|max:255',
+                'nama_matapelajaran' => 'required|string',
+                'hari' => 'required|string',
+                'nama_guru' => 'required|string',
+                'ruang_kelas' => 'required|string',
+                'metode_pembelajaran' => 'required|string',
                 'deskripsi' => 'nullable|string',
             ]);
         } catch (Exception $e) {
@@ -41,9 +43,11 @@ class MataKuliahController extends Controller
     public function update(Request $request, MataKuliah $mataKuliah)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'jadwal_kelas' => 'required|string|max:255',
-            'guru_pengajar' => 'required|string|max:255',
+            'nama_matapelajaran' => 'required|string',
+            'hari' => 'required|string',
+            'nama_guru' => 'required|string',
+            'ruang_kelas' => 'required|string',
+            'metode_pembelajaran' => 'required|string',
             'deskripsi' => 'nullable|string',
         ]);
 

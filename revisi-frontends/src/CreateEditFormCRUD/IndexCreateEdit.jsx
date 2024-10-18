@@ -1,15 +1,15 @@
 import CreateEditKelas from "./CreateEditKelas/CreateEditKelas";
-import CreateEditMapel from "./CreateEditMapel/CreateEditMapel";
-import CreateEditStudent from "./CreateEditStudent/CreateEditStudent";
 import TambahKelas from "./CreateEditKelas/TambahKelas";
+import CreateEditMapel from "./CreateEditMapel/CreateEditMapel";
 import TambahMapel from "./CreateEditMapel/TambahMapel";
-import TambahStudent from "./CreateEditStudent/TambahStudent";
+import CreateEditStudent from "./CreateEditStudent/CreateEditStudent";
+import TambahStudet from "./CreateEditStudent/TambahStudent";
 
 export {
   CreateEditKelas,
-  CreateEditMapel,
-  CreateEditStudent,
   TambahKelas,
+  CreateEditMapel,
   TambahMapel,
-  TambahStudent,
+  CreateEditStudent,
+  TambahStudet,
 };

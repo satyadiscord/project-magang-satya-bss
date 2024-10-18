@@ -37,7 +37,10 @@ export default function NavbarDashboard() {
   const filteredSidebarList =
     role === "student"
       ? sidebarList.filter(
-          (item) => item.name === "Home" || item.name === "Kelas"
+          (item) =>
+            item.name === "Home" ||
+            item.name === "Kelas" ||
+            item.name === "Request Kelas"
         )
       : sidebarList;
 
