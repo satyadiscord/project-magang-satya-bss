@@ -23,6 +23,8 @@ class MataKuliahController extends Controller
                 'nama_guru' => 'required|string',
                 'ruang_kelas' => 'required|string',
                 'metode_pembelajaran' => 'required|string',
+                'waktu_mulai' => 'required|date_format:H:i',
+                'waktu_selesai' => 'required|date_format:H:i',
                 'deskripsi' => 'nullable|string',
             ]);
         } catch (Exception $e) {
@@ -48,6 +50,8 @@ class MataKuliahController extends Controller
             'nama_guru' => 'required|string',
             'ruang_kelas' => 'required|string',
             'metode_pembelajaran' => 'required|string',
+            'waktu_mulai' => 'required|date_format:H:i',
+            'waktu_selesai' => 'required|date_format:H:i',
             'deskripsi' => 'nullable|string',
         ]);
 

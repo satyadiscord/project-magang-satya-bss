@@ -57,7 +57,7 @@ export default function Kelas() {
               >
                 Kelas Ultramen
               </th>
-              <td className="px-4 py-4">30</td>
+              <td className="px-4 py-4">1</td>
               <td className="px-4 py-4">Ibu Miya</td>
               <td className="px-4 py-4">1-2</td>
               <td className="px-4 py-4 text-right">

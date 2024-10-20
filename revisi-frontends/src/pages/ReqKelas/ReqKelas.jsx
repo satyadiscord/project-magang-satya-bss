@@ -4,28 +4,23 @@ import axios from "axios";
 
 export default function ReqKelas() {
   const [nama_siswa, setNamaSiswa] = useState("");
-  const [nama_kelas, setNamaKelas] = useState("");
   const [guru_pengajar, setGuruPengajar] = useState("");
   const [matapelajaran, setMatapelajaran] = useState("");
   const [semester, setSemester] = useState("");
   const [pendidikan, setPendidikan] = useState("");
   const [lokasi_kelas, setLokasiKelas] = useState("");
 
-  // const navigate = useNavigate();
-
   const handlerSubmit = async (e) => {
     e.preventDefault();
 
     const formData = {
       nama_siswa,
-      nama_kelas,
       guru_pengajar,
       matapelajaran,
       semester,
       pendidikan,
       lokasi_kelas,
     };
-
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/kelas",
@@ -35,7 +30,6 @@ export default function ReqKelas() {
       if (response.status === 201) {
         alert("Siswa Berhasil Ditambahkan");
         setNamaSiswa("");
-        setNamaKelas("");
         setGuruPengajar("");
         setMatapelajaran("");
         setSemester("");
@@ -77,23 +71,6 @@ export default function ReqKelas() {
             Nama Siswa
           </label>
         </div>
-        {/* option pemilihan kelas */}
-        <div className="mb-6">
-          <label htmlFor="pilih_kelas" className="sr-only">
-            Pilih Kelas
-          </label>
-          <select
-            value={nama_kelas}
-            onChange={(e) => setNamaKelas(e.target.value)}
-            id="pilih_kelas"
-            className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-          >
-            <option selected>Pilih Kelas</option>
-            <option value="Jingga">Teknik Informatika</option>
-            <option value="Janda">Janda</option>
-            <option value="Purple">Purple</option>
-          </select>
-        </div>
         {/* option guru pengaajr */}
         <div className="mb-6">
           <label htmlFor="opsi_guru" className="sr-only">
@@ -107,8 +84,6 @@ export default function ReqKelas() {
           >
             <option selected>Pilih Guru</option>
             <option value="Ayu">Ayu</option>
-            <option value="Sinta">Teknik Robotik</option>
-            <option value="Siti">Siti</option>
           </select>
         </div>
         {/* option pemilihan mapel */}

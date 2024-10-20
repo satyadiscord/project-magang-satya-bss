@@ -35,6 +35,7 @@ Route::apiResource('siswasekolah', SiswasekolahController::class);
 
 Route::middleware(['auth:sanctum', 'role:teacher'])->group(function () {
     Route::get('/teacher/dashboard', [TeacherController::class, 'dashboard']);
+    Route::get('/teachers', [TeacherController::class, 'index']);
 });
 
 Route::middleware(['auth:sanctum', 'role:student'])->group(function () {

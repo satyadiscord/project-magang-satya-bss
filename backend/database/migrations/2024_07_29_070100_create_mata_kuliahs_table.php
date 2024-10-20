@@ -14,6 +14,8 @@ class CreateMataKuliahsTable extends Migration
             $table->string('hari');
             $table->string('nama_guru');
             $table->string('ruang_kelas');
+            $table->time('waktu_mulai');
+            $table->time('waktu_selesai');
             $table->string('metode_pembelajaran');
             $table->text('deskripsi')->nullable();
             $table->timestamps();
