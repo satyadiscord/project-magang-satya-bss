@@ -45,7 +45,7 @@ export default function App() {
             <Route path="/matapelajaran" element={<MataPelajaran />} />
             <Route path="/student" element={<Student />} />
             <Route path="/request-kelas" element={<ReqKelas />} />
-            <Route path="/detail-kelas" element={<KelasDetail />} />
+            <Route path="/detail-kelas/:id" element={<KelasDetail />} />
             <Route path="/detail-matapelajaran" element={<MapelDetail />} />
             <Route path="/detail-student" element={<StudentDetail />} />
           </Route>
@@ -53,7 +53,15 @@ export default function App() {
           {/* Routes di luar mainApp */}
           <Route path="/profil" element={<ProfilUser />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+
+          <Route
+            path="/login"
+            element={
+              <ProtectedRoute redirectPath="/">
+                <Login />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Crud routing */}
           <Route path="/tambah-kelas" element={<TambahKelas />} />

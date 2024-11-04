@@ -1,17 +1,69 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+// List Option
+import { jurusanOption } from "../../atom/OptionList/JurusanOption";
+import { tingkatPendidikan } from "../../atom/OptionList/PendidikanOption";
+import { MapelOption } from "../../atom/OptionList/MapelOption";
 
 export default function TambahStudent() {
+  const [nama_student, setNamaStudent] = useState("");
+  const [nis, setNis] = useState("");
+  const [email, setEmail] = useState("");
+  const [tanggal_lahir, setTanggalLahir] = useState("");
+  const [alamat, setAlamat] = useState("");
+  const [jurusan, setJurusan] = useState("");
+  const [jenis_kelamin, setJenisKelamin] = useState("");
+  const [nomber_telpon, setNomberTelpon] = useState("");
+  const [tingkat_pendidikan, setTingkatPendidikan] = useState("");
+  const [matapelajaran, setMatapelajaran] = useState("");
+  const [orangtua, setOrangtua] = useState("");
   const navigate = useNavigate();
+
+  // axios post
+  const handlerSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/siswasekolah",
+        {
+          nama_student,
+          nis,
+          email,
+          tanggal_lahir,
+          alamat,
+          jurusan,
+          jenis_kelamin,
+          nomber_telpon,
+          tingkat_pendidikan,
+          matapelajaran,
+          orangtua,
+        }
+      );
+      console.log("Result Response: ", response);
+      alert("Pembuatan data student berhasil dibuat!");
+      navigate("/student");
+    } catch (err) {
+      console.log("Request Failed: ", err);
+      alert("Request Failed, Gagal.");
+    }
+  };
 
   return (
     <>
       <h1 className="text-center font-bold text-2xl font-[arial]">
         Tambah Student
       </h1>
-      <form className="w-[88%] md:w-[60%] lg:w-[40%] m-auto mt-16 md:mt-28">
+      <form
+        onSubmit={handlerSubmit}
+        className="w-[88%] md:w-[60%] lg:w-[40%] m-auto mt-16 md:mt-28"
+      >
         <div className="relative z-0 w-full mb-5 group">
           <input
             type="text"
+            value={nama_student}
+            onChange={(e) => setNamaStudent(e.target.value)}
             id="nama_student"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
@@ -27,6 +79,8 @@ export default function TambahStudent() {
         <div className="relative z-0 w-full mb-5 group">
           <input
             type="number"
+            value={nis}
+            onChange={(e) => setNis(e.target.value)}
             id="nis"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
@@ -42,6 +96,8 @@ export default function TambahStudent() {
         <div className="relative z-0 w-full mb-10 group">
           <input
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             id="email"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
@@ -57,6 +113,8 @@ export default function TambahStudent() {
         <div className="relative z-0 w-full mb-5 group">
           <input
             type="date"
+            value={tanggal_lahir}
+            onChange={(e) => setTanggalLahir(e.target.value)}
             id="tanggal_lahir"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
@@ -72,6 +130,8 @@ export default function TambahStudent() {
         <div className="relative z-0 w-full mb-10 group">
           <input
             type="text"
+            value={alamat}
+            onChange={(e) => setAlamat(e.target.value)}
             id="alamat"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
@@ -91,16 +151,17 @@ export default function TambahStudent() {
             Pilih Jurusan
           </label>
           <select
+            value={jurusan}
+            onChange={(e) => setJurusan(e.target.value)}
             id="jurusan"
             className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
           >
             <option selected>Pilih Jurusan</option>
-            <option value="Teknik Informatika">Teknik Informatika</option>
-            <option value="Teknik Robotik">Teknik Robotik</option>
-            <option value="Teknik Elektro">Teknik Elektro</option>
-            <option value="Teknik Mesin">Teknik Mesin</option>
-            <option value="Teknik Penerbangan">Teknik Penerbangan</option>
-            <option value="Teknik Kimia">Teknik Kimia</option>
+            {jurusanOption.map((dat, index) => (
+              <option key={index} value={dat.nama_jurusan}>
+                {dat.nama_jurusan}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -110,8 +171,10 @@ export default function TambahStudent() {
             <input
               id="laki"
               type="radio"
-              value=""
+              value="Laki-Laki"
               name="gender"
+              onChange={(e) => setJenisKelamin(e.target.value)}
+              checked={jenis_kelamin === "Laki-Laki"}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
             <label
@@ -123,11 +186,12 @@ export default function TambahStudent() {
           </div>
           <div className="flex items-center">
             <input
-              checked
               id="perempuan"
               type="radio"
-              value=""
+              value="Perempuan"
               name="gender"
+              onChange={(e) => setJenisKelamin(e.target.value)}
+              checked={jenis_kelamin === "Perempuan"}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
             <label
@@ -142,6 +206,8 @@ export default function TambahStudent() {
           <input
             type="number"
             id="nomber_telpon"
+            value={nomber_telpon}
+            onChange={(e) => setNomberTelpon(e.target.value)}
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             required
@@ -160,12 +226,16 @@ export default function TambahStudent() {
           </label>
           <select
             id="pendidikan"
+            value={tingkat_pendidikan}
+            onChange={(e) => setTingkatPendidikan(e.target.value)}
             className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
           >
             <option selected>Pilih Pendidikan</option>
-            <option value="SD">SD</option>
-            <option value="SMP">SMP</option>
-            <option value="SMK">SMK</option>
+            {tingkatPendidikan.map((dat, index) => (
+              <option key={index} value={dat.tingkat_pendidikan}>
+                {dat.tingkat_pendidikan}
+              </option>
+            ))}
           </select>
         </div>
         {/* option matapelajaran */}
@@ -175,21 +245,24 @@ export default function TambahStudent() {
           </label>
           <select
             id="matapelajaran"
+            value={matapelajaran}
+            onChange={(e) => setMatapelajaran(e.target.value)}
             className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
           >
             <option selected>Pilih Matapelajaran</option>
-            <option value="Matematika">Matematika</option>
-            <option value="Ipa">Ipa</option>
-            <option value="Bahasa Inggris">Bahasa Inggris</option>
-            <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-            <option value="Ips">Ips</option>
-            <option value="Sejarah">Sejarah</option>
+            {MapelOption.map((dat, index) => (
+              <option key={index} value={dat.nama_mapel}>
+                {dat.nama_mapel}
+              </option>
+            ))}
           </select>
         </div>
         <div className="relative z-0 w-full mb-5 group">
           <input
             type="text"
             id="orangtua_wali"
+            value={orangtua}
+            onChange={(e) => setOrangtua(e.target.value)}
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             required
@@ -204,6 +277,7 @@ export default function TambahStudent() {
         <div className="flex items-center mt-16">
           <button
             type="button"
+            onClick={handlerSubmit}
             className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
           >
             Tambah

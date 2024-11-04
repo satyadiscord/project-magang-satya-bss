@@ -21,5 +21,5 @@ export default function FetchStudentApi(urls) {
     fetchData();
   }, [urls]);
 
-  return { dataStudent, isLoading };
+  return { dataStudent, setDataStudent, isLoading };
 }

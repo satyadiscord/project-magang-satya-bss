@@ -1,28 +1,79 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+// option list IMPORT
+import { MapelOption } from "../../atom/OptionList/MapelOption";
+import { hariOption } from "../../atom/OptionList/HariOption";
+import { guruOption } from "../../atom/OptionList/GuruOption";
+import { tempatOption } from "../../atom/OptionList/TempatOption";
+import { pengajaranOption } from "../../atom/OptionList/PengajaranOption";
 
 export default function TambahMapel() {
+  const [nama_matapelajaran, setNamaMatapelajaran] = useState("");
+  const [hari, setHari] = useState("");
+  const [waktu_mulai, setWaktuMulai] = useState("");
+  const [waktu_selesai, setWaktuSelesai] = useState("");
+  const [nama_guru, setNamaGuru] = useState("");
+  const [ruang_kelas, setRuangKelas] = useState("");
+  const [metode_pembelajaran, setMetodePembelajaran] = useState("");
+  const [deskripsi, setDeskripsi] = useState("");
+
   const navigate = useNavigate();
+  const handlerSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/mata-kuliahs",
+        {
+          nama_matapelajaran,
+          hari,
+          waktu_mulai,
+          waktu_selesai,
+          nama_guru,
+          ruang_kelas,
+          metode_pembelajaran,
+          deskripsi,
+        }
+      );
+      console.log("Result Response: ", response);
+      if (response.status === 201) {
+        alert("Create matapelajaran berhasil.");
+        navigate("/matapelajaran");
+      }
+    } catch (err) {
+      console.log("Request Post: ", err);
+      alert("Terjadi Kesalahan saat melaukan fetch.");
+    }
+  };
 
   return (
     <>
       <h1 className="text-center font-bold text-2xl font-[arial]">
         Tambah Matapelajaran
       </h1>
-      <form className="w-[88%] md:w-[60%] lg:w-[40%] m-auto mt-16 md:mt-28">
-        <div className="relative z-0 w-full mb-5 group">
-          <input
-            type="text"
-            id="nama_matapelajaran"
-            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" "
-            required
-          />
-          <label
-            htmlFor="nama_matapelajaran"
-            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >
-            Nama Matapelajaran
+      <form
+        onSubmit={handlerSubmit}
+        className="w-[88%] md:w-[60%] lg:w-[40%] m-auto mt-16 md:mt-28"
+      >
+        <div className="mb-6">
+          <label htmlFor="matapelajaran" className="sr-only">
+            Pilih Matapelajaran
           </label>
+          <select
+            value={nama_matapelajaran}
+            onChange={(e) => setNamaMatapelajaran(e.target.value)}
+            id="matapelajaran"
+            className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+          >
+            <option selected>Pilih Matapelajaran</option>
+            {MapelOption.map((dat, index) => (
+              <option key={index} value={dat.nama_mapel}>
+                {dat.nama_mapel}
+              </option>
+            ))}
+          </select>
         </div>
         {/* option hari */}
         <div>
@@ -31,39 +82,44 @@ export default function TambahMapel() {
           </label>
           <select
             id="hari"
+            value={hari}
+            onChange={(e) => setHari(e.target.value)}
             className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
           >
             <option selected>Pilih Hari Dilaksanakan</option>
-            <option value="Senin">Senin</option>
-            <option value="Selasa">Selasa</option>
-            <option value="Rabu">Rabu</option>
-            <option value="Kamis">Kamis</option>
-            <option value="Jumat">Jumat</option>
-            <option value="Sabtu">Sabtu</option>
+            {hariOption.map((dat, index) => (
+              <option key={index} value={dat.nama_hari}>
+                {dat.nama_hari}
+              </option>
+            ))}
           </select>
+        </div>
 
-          {/* Pemilihan Waktu Mulai */}
-          <div className="relative z-0 w-full mb-9 mt-10 group">
-            <input
-              type="time"
-              id="waktu_mulai"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-              required
-            />
-            <label
-              htmlFor="waktu_mulai"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Waktu Mulai
-            </label>
-          </div>
+        {/* Pemilihan Waktu Mulai */}
+        <div className="relative z-0 w-full mb-9 mt-10 group">
+          <input
+            type="time"
+            id="waktu_mulai"
+            value={waktu_mulai}
+            onChange={(e) => setWaktuMulai(e.target.value)}
+            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" "
+            required
+          />
+          <label
+            htmlFor="waktu_mulai"
+            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Waktu Mulai
+          </label>
         </div>
         {/* Waktu Selesai */}
         <div className="relative z-0 w-full mb-5 group">
           <input
             type="Time"
             id="waktu_selesai"
+            value={waktu_selesai}
+            onChange={(e) => setWaktuSelesai(e.target.value)}
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             required
@@ -82,12 +138,16 @@ export default function TambahMapel() {
           </label>
           <select
             id="nama_guru"
+            value={nama_guru}
+            onChange={(e) => setNamaGuru(e.target.value)}
             className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
           >
             <option selected>Pilih Nama Guru</option>
-            <option value="Ayu">Ayu</option>
-            <option value="Mita">Mita</option>
-            <option value="Suartini">Suartini</option>
+            {guruOption.map((dat, index) => (
+              <option key={index} value={dat.nama_guru}>
+                {dat.nama_guru}
+              </option>
+            ))}
           </select>
         </div>
         {/* option untuk ruangan kelas */}
@@ -97,13 +157,16 @@ export default function TambahMapel() {
           </label>
           <select
             id="ruangan"
+            value={ruang_kelas}
+            onChange={(e) => setRuangKelas(e.target.value)}
             className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
           >
             <option selected>Pilih Tempat</option>
-            <option value="Lab">Lab</option>
-            <option value="Aula">Aula</option>
-            <option value="Komputer">Komputer</option>
-            <option value="Perpustakaan">Perpustakaan</option>
+            {tempatOption.map((dat, index) => (
+              <option key={index} value={dat.lokasi}>
+                {dat.lokasi}
+              </option>
+            ))}
           </select>
         </div>
         {/* Metode Pengajaran */}
@@ -113,12 +176,16 @@ export default function TambahMapel() {
           </label>
           <select
             id="metode_pengajaran"
+            value={metode_pembelajaran}
+            onChange={(e) => setMetodePembelajaran(e.target.value)}
             className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
           >
             <option selected>Pilih Metode Pengajaran</option>
-            <option value="Praktek">Praktek</option>
-            <option value="Teori">Teori</option>
-            <option value="Proyek">Proyek</option>
+            {pengajaranOption.map((dat, index) => (
+              <option key={index} value={dat.metode}>
+                {dat.metode}
+              </option>
+            ))}
           </select>
         </div>
         {/* Deskripsi */}
@@ -126,6 +193,8 @@ export default function TambahMapel() {
           <input
             type="text"
             id="deskripsi"
+            value={deskripsi}
+            onChange={(e) => setDeskripsi(e.target.value)}
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             required
@@ -140,6 +209,7 @@ export default function TambahMapel() {
         {/* button */}
         <div className="flex items-center mt-16">
           <button
+            onClick={handlerSubmit}
             type="button"
             className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
           >

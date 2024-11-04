@@ -1,15 +1,35 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import FetchStudentApi from "../../api/StudentAPI/GetStudentApi";
+import axios from "axios";
+
+// IMPORT IC from react-icons
 import { MdDeleteOutline } from "react-icons/md"; // IC delete
 import { MdOutlineEdit } from "react-icons/md"; // IC Update
 import { BsEye } from "react-icons/bs"; // IC detail
 import { IoMdAdd } from "react-icons/io"; //IC add
-import { useNavigate } from "react-router-dom";
-import FetchStudentApi from "../../api/StudentAPI/GetStudentApi";
 
 export default function Student() {
-  const { dataStudent, isLoading } = FetchStudentApi(
+  const [isDelete, setIsDelete] = useState(false);
+  const { dataStudent, setDataStudent, isLoading } = FetchStudentApi(
     "http://127.0.0.1:8000/api/siswasekolah"
   );
   const navigate = useNavigate();
+
+  // delet data
+  const handlerDelete = async (id) => {
+    if (window.confirm("Apakah anda yakin menghapus data ini?")) {
+      setIsDelete(true);
+      try {
+        await axios.delete(`http://127.0.0.1:8000/api/siswasekolah/${id}`);
+        setDataStudent(dataStudent.filter((items) => items.id !== id));
+        alert("Data Student berhasil dihapus.");
+      } catch (err) {
+        console.log("Terjadi kesalahan di saat melakukan hapus data: ", err);
+        alert("Terjadi kesalahan saat melakukan penghapusan data.");
+      }
+    }
+  };
 
   return (
     <>
@@ -90,67 +110,77 @@ export default function Student() {
                 </tr>
               </thead>
               <tbody>
-                {dataStudent.map((dat, index) => (
-                  <tr
-                    key={index}
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                  >
-                    <th
-                      scope="row"
-                      className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                {dataStudent.length > 0 ? (
+                  dataStudent.map((dat, index) => (
+                    <tr
+                      key={index}
+                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                     >
-                      {dat.nama_student}
-                    </th>
-                    <td className="px-4 py-4">{dat.nis}</td>
-                    <td className="px-4 py-4">{dat.email}</td>
-                    <td className="px-4 py-4">{dat.tanggal_lahir}</td>
-                    <td className="px-4 py-4">{dat.alamat}</td>
-                    <td className="px-4 py-4">{dat.jurusan}</td>
-                    <td className="px-4 py-4 text-right">
-                      <div className="relative group inline-block">
-                        <button
-                          onClick={() => navigate("/detail-student")}
-                          href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        >
-                          <BsEye size={24} />
-                        </button>
-                        {/* Tooltip */}
-                        <div className="absolute right-6 top-1 mb-2 hidden group-hover:block bg-gray-500 text-white text-xs rounded px-4 py-1 z-10">
-                          Detail
+                      <th
+                        scope="row"
+                        className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        {dat.nama_student}
+                      </th>
+                      <td className="px-4 py-4">{dat.nis}</td>
+                      <td className="px-4 py-4">{dat.email}</td>
+                      <td className="px-4 py-4">{dat.tanggal_lahir}</td>
+                      <td className="px-4 py-4">{dat.alamat}</td>
+                      <td className="px-4 py-4">{dat.jurusan}</td>
+                      <td className="px-4 py-4 text-right">
+                        <div className="relative group inline-block">
+                          <button
+                            onClick={() => navigate("/detail-student")}
+                            href="#"
+                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          >
+                            <BsEye size={24} />
+                          </button>
+                          {/* Tooltip */}
+                          <div className="absolute right-6 top-1 mb-2 hidden group-hover:block bg-gray-500 text-white text-xs rounded px-4 py-1 z-10">
+                            Detail
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 text-right">
-                      <div className="relative group inline-block">
-                        <button
-                          onClick={() => navigate("/edit-student")}
-                          href="#"
-                          className="font-medium text-green-600 dark:text-green-500 hover:underline"
-                        >
-                          <MdOutlineEdit size={24} />
-                        </button>
-                        {/* Tooltip */}
-                        <div className="absolute right-6 top-1 mb-2 hidden group-hover:block bg-gray-500 text-white text-xs rounded px-4 py-1 z-10">
-                          Edit
+                      </td>
+                      <td className="px-4 py-4 text-right">
+                        <div className="relative group inline-block">
+                          <button
+                            onClick={() => navigate(`/edit-student/${dat.id}`)}
+                            href="#"
+                            className="font-medium text-green-600 dark:text-green-500 hover:underline"
+                          >
+                            <MdOutlineEdit size={24} />
+                          </button>
+                          {/* Tooltip */}
+                          <div className="absolute right-6 top-1 mb-2 hidden group-hover:block bg-gray-500 text-white text-xs rounded px-4 py-1 z-10">
+                            Edit
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 text-right">
-                      <div className="relative group inline-block">
-                        <button
-                          href="#"
-                          className="font-medium text-red-600 dark:text-red-500 hover:underline"
-                        >
-                          <MdDeleteOutline size={24} />
-                        </button>
-                        <div className="absolute right-6 top-1 mb-2 hidden group-hover:block bg-gray-500 text-white text-xs rounded px-4 py-1 z-10">
-                          Delete
+                      </td>
+                      <td className="px-4 py-4 text-right">
+                        <div className="relative group inline-block">
+                          <button
+                            onClick={() => handlerDelete(dat.id)}
+                            disabled={isDelete}
+                            href="#"
+                            className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                          >
+                            <MdDeleteOutline size={24} />
+                          </button>
+                          <div className="absolute right-6 top-1 mb-2 hidden group-hover:block bg-gray-500 text-white text-xs rounded px-4 py-1 z-10">
+                            Delete
+                          </div>
                         </div>
-                      </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td className="text-center px-10 py-4 text-gray-500">
+                      Data Student Kosong
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function FetchMapelApi(urls) {
-  const [dataMapel, setDataMapel] = useState([]);
+export default function FetchKelasApi(urls) {
+  const [dataKelas, setDataKelas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -10,7 +10,7 @@ export default function FetchMapelApi(urls) {
       setIsLoading(true);
       try {
         const response = await axios.get(urls);
-        setDataMapel(response.data);
+        setDataKelas(response.data);
         setIsLoading(false);
         // console.log(response.data);
       } catch (error) {
@@ -21,5 +21,5 @@ export default function FetchMapelApi(urls) {
     fetchData();
   }, [urls]);
 
-  return { dataMapel, setDataMapel, isLoading };
+  return { dataKelas, setDataKelas, isLoading };
 }

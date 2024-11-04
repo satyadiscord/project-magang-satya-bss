@@ -1,49 +1,56 @@
-import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function ReqKelas() {
   const [nama_siswa, setNamaSiswa] = useState("");
-  const [guru_pengajar, setGuruPengajar] = useState("");
-  const [matapelajaran, setMatapelajaran] = useState("");
-  const [semester, setSemester] = useState("");
+  const [mapel, setMapel] = useState("");
   const [pendidikan, setPendidikan] = useState("");
-  const [lokasi_kelas, setLokasiKelas] = useState("");
+  const [ruang_kelas, setRuangKelas] = useState("");
+  const [daftar_kelas_id, setDaftarKelasId] = useState("");
+  const [getNameKelas, setGetNameKelas] = useState([]);
 
-  const handlerSubmit = async (e) => {
+  const navigate = useNavigate();
+
+  // get kelas
+  useEffect(() => {
+    async function getFetchingKelas() {
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:8000/api/daftar-kelas"
+        );
+        console.log("Result response: ", response.data);
+        setGetNameKelas(response.data);
+      } catch (error) {
+        console.log("Error Response get kelas: ", error);
+      }
+    }
+    getFetchingKelas();
+  }, []);
+
+  async function handlerSubmit(e) {
     e.preventDefault();
-
-    const formData = {
-      nama_siswa,
-      guru_pengajar,
-      matapelajaran,
-      semester,
-      pendidikan,
-      lokasi_kelas,
-    };
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/kelas",
-        formData
+        "http://127.0.0.1:8000/api/detail-kelas",
+        {
+          nama_siswa,
+          mapel,
+          pendidikan,
+          ruang_kelas,
+          daftar_kelas_id,
+        }
       );
-
+      console.log("Result response: ", response);
       if (response.status === 201) {
-        alert("Siswa Berhasil Ditambahkan");
-        setNamaSiswa("");
-        setGuruPengajar("");
-        setMatapelajaran("");
-        setSemester("");
-        setPendidikan("");
-        setLokasiKelas("");
-        console.log("Siswa Berhasil Ditambahkan");
-      } else {
-        alert("Siswa Gagal Ditambahkan");
+        alert("Request kelas berhasil. data anda akan masuk di KELAS");
+        navigate("/kelas");
       }
-    } catch (err) {
-      console.log("result: ", err);
-      alert("Terjadi kesalahan, tidak dapat mengirim data.");
+    } catch (error) {
+      console.log("Error fetching data in request kelas: ", error.message);
+      alert("Terjadi error fetching dalam request kelas");
     }
-  };
+  }
 
   return (
     <>
@@ -71,29 +78,14 @@ export default function ReqKelas() {
             Nama Siswa
           </label>
         </div>
-        {/* option guru pengaajr */}
-        <div className="mb-6">
-          <label htmlFor="opsi_guru" className="sr-only">
-            Pilih Guru
-          </label>
-          <select
-            value={guru_pengajar}
-            onChange={(e) => setGuruPengajar(e.target.value)}
-            id="opsi_guru"
-            className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-          >
-            <option selected>Pilih Guru</option>
-            <option value="Ayu">Ayu</option>
-          </select>
-        </div>
         {/* option pemilihan mapel */}
         <div className="mb-6">
           <label htmlFor="matapelajaran" className="sr-only">
             Pilih Matapelajaran
           </label>
           <select
-            value={matapelajaran}
-            onChange={(e) => setMatapelajaran(e.target.value)}
+            value={mapel}
+            onChange={(e) => setMapel(e.target.value)}
             id="matapelajaran"
             className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
           >
@@ -106,23 +98,7 @@ export default function ReqKelas() {
             <option value="Sejarah">Sejarah</option>
           </select>
         </div>
-        {/* option semester */}
-        <div className="mb-6">
-          <label htmlFor="semester" className="sr-only">
-            Pilih Semester
-          </label>
-          <select
-            value={semester}
-            onChange={(e) => setSemester(e.target.value)}
-            id="semester"
-            className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-          >
-            <option selected>Pilih Semester</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select>
-        </div>
-        {/* option pendiikan */}
+        {/* option pendidikan */}
         <div className="mb-6">
           <label htmlFor="pendiidkan" className="sr-only">
             Pilih Tingkat Pendidikan
@@ -141,13 +117,13 @@ export default function ReqKelas() {
           </select>
         </div>
         {/* option ruang kelas */}
-        <div>
+        <div className="mb-7">
           <label htmlFor="ruangan_kelas" className="sr-only">
             Pilih Ruangan
           </label>
           <select
-            value={lokasi_kelas}
-            onChange={(e) => setLokasiKelas(e.target.value)}
+            value={ruang_kelas}
+            onChange={(e) => setRuangKelas(e.target.value)}
             id="ruangan_kelas"
             className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
           >
@@ -159,11 +135,30 @@ export default function ReqKelas() {
           </select>
         </div>
 
+        {/* option kelas */}
+        <div>
+          <label htmlFor="kelas_option" className="sr-only">
+            Pilih Kelas
+          </label>
+          <select
+            value={daftar_kelas_id}
+            onChange={(e) => setDaftarKelasId(e.target.value)}
+            id="kelas_option"
+            className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+          >
+            <option selected>Pilih Kelas</option>
+            {getNameKelas.map((dat, index) => (
+              <option key={index} value={dat.nama_kelas}>
+                {dat.nama_kelas}
+              </option>
+            ))}
+          </select>
+        </div>
+
         {/* button */}
         <div className="flex items-center mt-16">
           <button
-            onClick={handlerSubmit}
-            type="button"
+            type="submit"
             className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
           >
             Request
