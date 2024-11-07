@@ -16,6 +16,11 @@ export default function MataPelajaran() {
   );
   const navigate = useNavigate();
 
+  const formatTime = (timeString) => {
+    const [hour, minute] = timeString.split(":");
+    return `${hour}:${minute}`;
+  };
+
   const handlerDelete = async (id) => {
     if (window.confirm("Apakah anda yakin menghapus data ini?")) {
       setIsDelete(true);
@@ -116,8 +121,12 @@ export default function MataPelajaran() {
                         {dat.nama_matapelajaran}
                       </th>
                       <td className="px-4 py-4">{dat.hari}</td>
-                      <td className="px-4 py-4">{dat.waktu_mulai}</td>
-                      <td className="px-4 py-4">{dat.waktu_selesai}</td>
+                      <td className="px-4 py-4">
+                        {formatTime(dat.waktu_mulai)}
+                      </td>
+                      <td className="px-4 py-4">
+                        {formatTime(dat.waktu_selesai)}
+                      </td>
                       <td className="px-4 py-4 text-right">
                         <div className="relative group inline-block">
                           <button

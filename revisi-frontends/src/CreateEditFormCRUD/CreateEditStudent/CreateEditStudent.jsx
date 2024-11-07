@@ -75,14 +75,43 @@ export default function CreateEditStudent() {
       }
     } catch (err) {
       console.log("Request Failed: ", err);
-      alert("Terjadi kesalhan saat melakukan fetching data.");
+      alert("Terjadi kesalahan, tolong cek data anda kembali");
+    }
+  };
+
+  // mengatasi input nis 4 digit
+  const handleChangeNis = (e) => {
+    const { value } = e.target;
+    if (value.length <= 4 && /^[0-9]*$/.test(value)) {
+      setNis(value);
+    }
+  };
+
+  const handleBlurNis = () => {
+    if (nis.length !== 4) {
+      alert("NIS harus terdiri dari 4 angka.");
+      setNis("");
+    }
+  };
+
+  // mengatasi nomber telepon hingga digit 7-15
+  const handleChangeTelpon = (e) => {
+    const { value } = e.target;
+    if (/^[0-9]*$/.test(value) && value.length <= 15) {
+      setNomberTelpon(value);
+    }
+  };
+
+  const handleBlurTelpon = () => {
+    if (nomber_telpon.length < 7) {
+      alert("Nomor telepon harus terdiri dari minimal 7 angka.");
     }
   };
 
   return (
     <>
       <h1 className="text-center font-bold text-2xl font-[arial]">
-        Edit Student
+        Perbarui Student
       </h1>
       <form
         onSubmit={handlerSubmit}
@@ -109,7 +138,8 @@ export default function CreateEditStudent() {
           <input
             type="number"
             value={nis}
-            onChange={(e) => setNis(e.target.value)}
+            onChange={handleChangeNis}
+            onBlur={handleBlurNis}
             id="nis"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
@@ -236,7 +266,8 @@ export default function CreateEditStudent() {
             type="number"
             id="nomber_telpon"
             value={nomber_telpon}
-            onChange={(e) => setNomberTelpon(e.target.value)}
+            onChange={handleChangeTelpon}
+            onBlur={handleBlurTelpon}
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             required
@@ -308,7 +339,7 @@ export default function CreateEditStudent() {
             type="submit"
             className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
           >
-            Update
+            Perbarui
           </button>
           <button
             onClick={() => navigate("/student")}

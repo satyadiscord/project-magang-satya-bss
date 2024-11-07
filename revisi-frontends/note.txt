@@ -71,3 +71,10 @@ berisi table yang isinya data-data siswa yang sudah bergabung di kelas:
 
   ##Growtopia
   world: bttxe (sell scimitar (10dl))
+
+
+## kelas
+
+jika kelas tersebut sudah mencapai 20 maka siswa tidak bisa masuk lagi
+
+berikan alert (bahwa sudah penuh)

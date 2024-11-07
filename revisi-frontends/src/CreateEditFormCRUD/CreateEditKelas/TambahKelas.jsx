@@ -22,14 +22,14 @@ export default function TambahKelas() {
           semester,
         }
       );
-      console.log("Result response: ", response);
+      // console.log("Result response: ", response);
       if (response.status === 201) {
         alert("Create kelas berhasil.");
         navigate("/kelas");
       }
     } catch (error) {
       console.log("Error: ", error.message);
-      alert("Error fetching data in create daftar kelas");
+      alert("Terjadi kesalahan, tolong cek data anda kembali");
     }
   }
 

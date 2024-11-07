@@ -72,6 +72,7 @@ export default function CreateEditMapel() {
         })
         .catch((error) => {
           console.error("Error updating data:", error);
+          alert("Terjadi kesalahan, tolong cek data anda kembali");
         });
     }
   }
@@ -79,7 +80,7 @@ export default function CreateEditMapel() {
   return (
     <>
       <h1 className="text-center font-bold text-2xl font-[arial]">
-        Tambah Matapelajaran
+        Perbarui Matapelajaran
       </h1>
       <form
         onSubmit={handlerSubmit}
@@ -240,7 +241,7 @@ export default function CreateEditMapel() {
             type="submit"
             className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
           >
-            Tambah
+            Perbarui
           </button>
           <button
             onClick={() => navigate("/matapelajaran")}

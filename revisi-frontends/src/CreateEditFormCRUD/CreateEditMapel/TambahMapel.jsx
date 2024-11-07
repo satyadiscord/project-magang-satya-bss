@@ -37,14 +37,14 @@ export default function TambahMapel() {
           deskripsi,
         }
       );
-      console.log("Result Response: ", response);
+      // console.log("Result Response: ", response);
       if (response.status === 201) {
         alert("Create matapelajaran berhasil.");
         navigate("/matapelajaran");
       }
     } catch (err) {
       console.log("Request Post: ", err);
-      alert("Terjadi Kesalahan saat melaukan fetch.");
+      alert("Terjadi kesalahan, tolong cek data anda kembali");
     }
   };
 

@@ -19,7 +19,7 @@ export default function ReqKelas() {
         const response = await axios.get(
           "http://127.0.0.1:8000/api/daftar-kelas"
         );
-        console.log("Result response: ", response.data);
+        // console.log("Result response: ", response.data);
         setGetNameKelas(response.data);
       } catch (error) {
         console.log("Error Response get kelas: ", error);
@@ -30,6 +30,7 @@ export default function ReqKelas() {
 
   async function handlerSubmit(e) {
     e.preventDefault();
+
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/detail-kelas",
@@ -41,21 +42,21 @@ export default function ReqKelas() {
           daftar_kelas_id,
         }
       );
-      console.log("Result response: ", response);
+      // console.log("Result response: ", response);
       if (response.status === 201) {
         alert("Request kelas berhasil. data anda akan masuk di KELAS");
         navigate("/kelas");
       }
     } catch (error) {
       console.log("Error fetching data in request kelas: ", error.message);
-      alert("Terjadi error fetching dalam request kelas");
+      alert("Terjadi kesalahan, tolong cek data anda kembali");
     }
   }
 
   return (
     <>
       <h1 className="text-center font-bold text-2xl font-[arial]">
-        Request Kelas
+        Daftar Kelas
       </h1>
       <form
         onSubmit={handlerSubmit}
@@ -148,8 +149,12 @@ export default function ReqKelas() {
           >
             <option selected>Pilih Kelas</option>
             {getNameKelas.map((dat, index) => (
-              <option key={index} value={dat.nama_kelas}>
-                {dat.nama_kelas}
+              <option
+                key={index}
+                value={dat.nama_kelas}
+                disabled={dat.jumlah_siswa >= 20}
+              >
+                {dat.nama_kelas} {dat.jumlah_siswa >= 20 ? "(Penuh)" : ""}
               </option>
             ))}
           </select>
@@ -161,7 +166,7 @@ export default function ReqKelas() {
             type="submit"
             className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
           >
-            Request
+            Daftar
           </button>
         </div>
       </form>

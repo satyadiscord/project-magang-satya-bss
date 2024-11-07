@@ -8,6 +8,11 @@ export default function MapelDetail() {
   );
   const navigate = useNavigate();
 
+  const formatTime = (timeString) => {
+    const [hour, minute] = timeString.split(":");
+    return `${hour}:${minute}`;
+  };
+
   return (
     <>
       {isLoading ? (
@@ -99,8 +104,12 @@ export default function MapelDetail() {
                       {dat.nama_matapelajaran}
                     </th>
                     <td className="px-10 py-4">{dat.hari}</td>
-                    <td className="px-10 py-4">{dat.waktu_mulai}</td>
-                    <td className="px-10 py-4">{dat.waktu_selesai}</td>
+                    <td className="px-10 py-4">
+                      {formatTime(dat.waktu_mulai)}
+                    </td>
+                    <td className="px-10 py-4">
+                      {formatTime(dat.waktu_selesai)}
+                    </td>
                     <td className="px-10 py-4">{dat.nama_guru}</td>
                     <td className="px-10 py-4">{dat.ruang_kelas}</td>
                     <td className="px-10 py-4">{dat.metode_pembelajaran}</td>

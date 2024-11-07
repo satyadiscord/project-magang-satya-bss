@@ -10,14 +10,13 @@ export default function KelasDetail() {
   const { dataKelas, setDataKelas, isLoading } = FetchKelasApi(
     "http://127.0.0.1:8000/api/daftar-kelas"
   );
-  console.log("Result: ", dataKelas);
+  // console.log("Result: ", dataKelas);
   const [isDelete, setIsDelete] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
 
   // Filter data kelas berdasarkan id yang sesuai
   const selectedKelas = dataKelas?.find((k) => k.id === parseInt(id));
-
   // create handlerDelete
   const handlerDelete = async (id) => {
     if (window.confirm("Apakah anda yakin menghapus data ini?")) {
@@ -123,7 +122,11 @@ export default function KelasDetail() {
                         <td className="px-10 py-4">{siswa.mapel}</td>
                         <td className="px-10 py-4">{siswa.pendidikan}</td>
                         <td className="px-10 py-4">{siswa.ruang_kelas}</td>
-                        <td className="px-10 py-4">Tersisa</td>
+                        <td className="px-10 py-4">
+                          {selectedKelas?.jumlah_siswa === 20
+                            ? "Penuh"
+                            : "Tersisa"}
+                        </td>
                         <td className="px-10 py-4">
                           <div className="relative group inline-block">
                             <button

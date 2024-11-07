@@ -21,12 +21,12 @@ export const sidebarList = [
     link_navigate: "/mataPelajaran",
   },
   {
-    name: "Student",
+    name: "Siswa",
     list_icons: <PiStudent size={30} />,
     link_navigate: "/student",
   },
   {
-    name: "Request Kelas",
+    name: "Daftar Kelas",
     list_icons: <IoMdPersonAdd size={30} />,
     link_navigate: "/request-kelas",
   },

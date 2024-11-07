@@ -10,8 +10,9 @@ export default function ProfilUser() {
   const navigate = useNavigate();
 
   const logoutHandler = () => {
+    // eslint-disable-next-line no-unused-vars
     const result = localStorage.removeItem("token");
-    console.log("Result: ", result);
+    // console.log("Result: ", result);
 
     navigate("/login");
   };
