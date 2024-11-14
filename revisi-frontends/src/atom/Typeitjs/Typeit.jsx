@@ -38,7 +38,7 @@ export default function Typeit() {
     <>
       <p
         ref={typeitRef}
-        className="text-light text-slate-800 text-center lg:text-start"
+        className="text-light text-slate-800 text-center lg:text-start dark:text-gray-200"
       ></p>
     </>
   );

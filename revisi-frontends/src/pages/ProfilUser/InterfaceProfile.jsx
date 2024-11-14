@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { UserIC } from "../../assets/IndexAssets";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
+// icons
+import { MdPerson } from "react-icons/md";
 
 export default function InterfaceProfile() {
   const [isHoverProfil, setIsHoverProfil] = useState(false);
@@ -38,10 +40,11 @@ export default function InterfaceProfile() {
         <button
           onClick={() => navigate("/profil")}
           className="w-[28px] h-[28px] sm:w-[33px] sm:h-[33px] border-2 border-slate-400 rounded-full bg-cover object-cover bg-center"
-          style={{ backgroundImage: `url(${UserIC})` }}
-        ></button>
+        >
+          <MdPerson className="w-full h-full" />
+        </button>
         {isHoverProfil && (
-          <div className="absolute z-40 top-[58px] right-0 border-t-2 border-blue-500 bg-white shadow-lg p-3">
+          <div className="absolute z-40 top-[58px] right-0 border-t-2 border-blue-500 bg-white shadow-lg p-3 dark:text-gray-700">
             {user.name}
           </div>
         )}

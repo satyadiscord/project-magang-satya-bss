@@ -4,6 +4,8 @@ import { sidebarList } from "../atom/ListMenu/SidebarList";
 import { useLocation, useNavigate } from "react-router-dom";
 import InterfaceProfile from "../pages/ProfilUser/InterfaceProfile";
 import axios from "axios";
+import DarkMode from "./DarkMode";
+// import { PiDivideBold } from "react-icons/pi";
 
 export default function NavbarDashboard() {
   const [isSideBar, setIsSideBar] = useState(false);
@@ -74,7 +76,12 @@ export default function NavbarDashboard() {
             Univer
           </span>
         </div>
-        <InterfaceProfile />
+        <div className="flex items-center md:gap-x-3 flex-row-reverse">
+          <InterfaceProfile />
+          <div className="hidden md:block">
+            <DarkMode />
+          </div>
+        </div>
       </div>
 
       {/* latar gelap */}
@@ -93,7 +100,7 @@ export default function NavbarDashboard() {
       >
         <h5
           id="drawer-navigation-label"
-          className="text-base font-semibold text-gray-500 uppercase dark:text-gray-400"
+          className="flex items-center text-base font-semibold text-gray-500 uppercase dark:text-gray-400"
         >
           Menu
         </h5>
@@ -141,6 +148,9 @@ export default function NavbarDashboard() {
                 </li>
               </div>
             ))}
+            <div className="flex items-center ml-[6px] md:hidden">
+              <DarkMode />
+            </div>
           </ul>
         </div>
       </div>

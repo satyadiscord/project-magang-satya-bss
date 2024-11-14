@@ -4,6 +4,9 @@ import { IoIosClose } from "react-icons/io"; // ic x
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+// icons
+import { MdPerson } from "react-icons/md";
+
 export default function ProfilUser() {
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +44,7 @@ export default function ProfilUser() {
 
   return (
     <>
-      <div className="w-full m-auto my-8 max-w-sm bg-white border-x-2">
+      <div className="w-full m-auto my-8 max-w-sm bg-white border-x-2 dark:bg-gray-800">
         <button
           onClick={() => navigate("/")}
           className="absolute right-0 top-0 hover:bg-red-600 transition duration-500"
@@ -49,11 +52,12 @@ export default function ProfilUser() {
           <IoIosClose size={40} className="hover:text-white" />
         </button>
         <div className="flex flex-col items-center pb-10">
-          <img
+          {/* <img
             className="w-24 h-24 mb-3 rounded-full shadow-lg bg-cover object-cover bg-center"
             src={UserIC}
             alt="Bonnie image"
-          />
+          /> */}
+          <MdPerson className="w-24 h-24 mb-3 rounded-full" />
           {isLoading ? (
             <>
               <div className="flex justify-center items-center">
@@ -83,7 +87,9 @@ export default function ProfilUser() {
               <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
                 {user.name}
               </h5>
-              <span className="mb-5 -mt-2 font-light">{user.email}</span>
+              <span className="mb-5 -mt-2 font-light dark:text-gray-200">
+                {user.email}
+              </span>
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 {user.role}
               </span>

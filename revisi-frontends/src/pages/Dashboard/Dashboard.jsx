@@ -17,9 +17,6 @@ export default function Dashboard() {
               className="w-[296px] h-[200px] sm:w-[490px] sm:h-[270px] md:w-[690px] lg:w-[500px] border bg-cover bg-center object-cover"
               style={{ backgroundImage: `url(${GambarBuku})` }}
             ></div>
-            <p className="text-center lg:text-start text-base text-slate-500 font-serif font-medium">
-              19 Spetember 2024
-            </p>
           </div>
         </div>
 
@@ -27,7 +24,7 @@ export default function Dashboard() {
 
         <section className="mt-10 lg:mt-16 sm:pl-2">
           <h1 className="text-2xl font-serif font-semibold">Abstrak</h1>
-          <p className="text-base font-light text-slate-600 text-wrap">
+          <p className="text-base font-light text-slate-600 text-wrap dark:text-gray-300">
             Sistem informasi proses belajar mengajar online merupakan sistem
             pendidikan yang menggunakan aplikasi elektronik untuk mendukung
             pengembangan kegiatan belajar mengajar dengan media internet. Sistem

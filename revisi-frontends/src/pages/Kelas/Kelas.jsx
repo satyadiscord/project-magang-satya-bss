@@ -96,9 +96,6 @@ export default function Kelas() {
                   <th scope="col" className="px-4 py-3">
                     <span className="sr-only">Edit</span>
                   </th>
-                  <th scope="col" className="px-4 py-3">
-                    <span className="sr-only">Delete</span>
-                  </th>
                 </tr>
               </thead>
               <tbody>
