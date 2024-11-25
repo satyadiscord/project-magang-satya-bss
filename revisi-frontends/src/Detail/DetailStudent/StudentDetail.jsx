@@ -1,12 +1,16 @@
 import { IoChevronBack } from "react-icons/io5"; // IC back
 import FetchStudentApi from "../../api/StudentAPI/GetStudentApi"; // api student
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function StudentDetail() {
   const { dataStudent, isLoading } = FetchStudentApi(
     "http://127.0.0.1:8000/api/siswasekolah"
   );
+  const { id } = useParams();
   const navigate = useNavigate();
+
+  const getById = dataStudent?.find((items) => items.id.toString() === id);
+
   return (
     <>
       {isLoading ? (
@@ -95,29 +99,32 @@ export default function StudentDetail() {
                 </tr>
               </thead>
               <tbody>
-                {dataStudent.map((dat, index) => (
-                  <tr
-                    key={index}
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                  >
+                {getById ? (
+                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th
                       scope="row"
                       className="px-10 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      {dat.nama_student}
+                      {getById.nama_student}
                     </th>
-                    <td className="px-10 py-4">{dat.nis}</td>
-                    <td className="px-10 py-4">{dat.email}</td>
-                    <td className="px-10 py-4">{dat.tanggal_lahir}</td>
-                    <td className="px-10 py-4">{dat.alamat}</td>
-                    <td className="px-10 py-4">{dat.jurusan}</td>
-                    <td className="px-10 py-4">{dat.jenis_kelamin}</td>
-                    <td className="px-10 py-4">{dat.nomber_telpon}</td>
-                    <td className="px-10 py-4">{dat.tingkat_pendidikan}</td>
-                    <td className="px-10 py-4">{dat.matapelajaran}</td>
-                    <td className="px-10 py-4">{dat.orangtua}</td>
+                    <td className="px-10 py-4">{getById.nis}</td>
+                    <td className="px-10 py-4">{getById.email}</td>
+                    <td className="px-10 py-4">{getById.tanggal_lahir}</td>
+                    <td className="px-10 py-4">{getById.alamat}</td>
+                    <td className="px-10 py-4">{getById.jurusan}</td>
+                    <td className="px-10 py-4">{getById.jenis_kelamin}</td>
+                    <td className="px-10 py-4">{getById.nomber_telpon}</td>
+                    <td className="px-10 py-4">{getById.tingkat_pendidikan}</td>
+                    <td className="px-10 py-4">{getById.matapelajaran}</td>
+                    <td className="px-10 py-4">{getById.orangtua}</td>
                   </tr>
-                ))}
+                ) : (
+                  <tr>
+                    <td className="text-center px-10 py-4 text-gray-500">
+                      Data Tidak Ditemukan
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

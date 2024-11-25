@@ -46,8 +46,8 @@ export default function App() {
             <Route path="/student" element={<Student />} />
             <Route path="/request-kelas" element={<ReqKelas />} />
             <Route path="/detail-kelas/:id" element={<KelasDetail />} />
-            <Route path="/detail-matapelajaran" element={<MapelDetail />} />
-            <Route path="/detail-student" element={<StudentDetail />} />
+            <Route path="/detail-matapelajaran/:id" element={<MapelDetail />} />
+            <Route path="/detail-student/:id" element={<StudentDetail />} />
           </Route>
 
           {/* Routes di luar mainApp */}

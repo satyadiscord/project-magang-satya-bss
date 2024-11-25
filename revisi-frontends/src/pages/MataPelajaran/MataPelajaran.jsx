@@ -130,7 +130,9 @@ export default function MataPelajaran() {
                       <td className="px-4 py-4 text-right">
                         <div className="relative group inline-block">
                           <button
-                            onClick={() => navigate("/detail-matapelajaran")}
+                            onClick={() =>
+                              navigate(`/detail-matapelajaran/${dat.id}`)
+                            }
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                           >
                             <BsEye size={24} />

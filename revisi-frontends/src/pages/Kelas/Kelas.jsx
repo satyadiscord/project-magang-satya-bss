@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FetchKelasApi from "../../api/KelasApi/GetKelasApi";
 import axios from "axios";
 
@@ -9,10 +9,30 @@ import { useNavigate } from "react-router-dom";
 
 export default function Kelas() {
   const [isDelete, setIsDelete] = useState(false);
+  const [role, setRole] = useState("");
   const { dataKelas, setDataKelas, isLoading } = FetchKelasApi(
     "http://127.0.0.1:8000/api/daftar-kelas"
   );
   const navigate = useNavigate();
+
+  // useEffect Role
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setRole(response.data.role);
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+      }
+    };
+    fetchUserData();
+  }, []);
 
   // create handlerDelete
   const handlerDelete = async (id) => {
@@ -65,7 +85,7 @@ export default function Kelas() {
               <div className="relative group inline-block">
                 <button
                   onClick={() => navigate("/tambah-kelas")}
-                  className="mr-3"
+                  className={`mr-3 ${role === "student" ? "hidden" : "block"}`}
                 >
                   <IoMdAdd size={25} />
                 </button>
@@ -135,7 +155,9 @@ export default function Kelas() {
                             onClick={() => handlerDelete(dat.id)}
                             disabled={isDelete}
                             href="#"
-                            className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                            className={`font-medium text-red-600 dark:text-red-500 hover:underline ${
+                              role === "student" ? "hidden" : "block"
+                            }`}
                           >
                             <MdDeleteOutline size={24} />
                           </button>

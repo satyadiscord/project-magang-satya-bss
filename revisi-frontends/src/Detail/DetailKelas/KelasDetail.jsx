@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FetchKelasApi from "../../api/KelasApi/GetKelasApi";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -12,11 +12,31 @@ export default function KelasDetail() {
   );
   // console.log("Result: ", dataKelas);
   const [isDelete, setIsDelete] = useState(false);
+  const [role, setRole] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Filter data kelas berdasarkan id yang sesuai
   const selectedKelas = dataKelas?.find((k) => k.id === parseInt(id));
+
+  // useEffect Role
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setRole(response.data.role);
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+      }
+    };
+    fetchUserData();
+  }, []);
+
   // create handlerDelete
   const handlerDelete = async (id) => {
     if (window.confirm("Apakah anda yakin menghapus data ini?")) {
@@ -133,7 +153,9 @@ export default function KelasDetail() {
                               onClick={() => handlerDelete(siswa.id)}
                               disabled={isDelete}
                               href="#"
-                              className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                              className={`font-medium text-red-600 dark:text-red-500 hover:underline ${
+                                role === "student" ? "hidden" : "block"
+                              }`}
                             >
                               <MdDeleteOutline size={24} />
                             </button>

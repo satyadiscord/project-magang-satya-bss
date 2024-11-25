@@ -130,7 +130,9 @@ export default function Student() {
                       <td className="px-4 py-4 text-right">
                         <div className="relative group inline-block">
                           <button
-                            onClick={() => navigate("/detail-student")}
+                            onClick={() =>
+                              navigate(`/detail-student/${dat.id}`)
+                            }
                             href="#"
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                           >

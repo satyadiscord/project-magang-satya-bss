@@ -1,12 +1,15 @@
 import FetchMapelApi from "../../api/MapelAPI/GetMapelApi";
 import { IoChevronBack } from "react-icons/io5"; // IC back
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function MapelDetail() {
   const { dataMapel, isLoading } = FetchMapelApi(
     "http://127.0.0.1:8000/api/mata-kuliahs"
   );
+  const { id } = useParams();
   const navigate = useNavigate();
+
+  const getById = dataMapel?.find((items) => items.id.toString() === id);
 
   const formatTime = (timeString) => {
     const [hour, minute] = timeString.split(":");
@@ -92,30 +95,35 @@ export default function MapelDetail() {
                 </tr>
               </thead>
               <tbody>
-                {dataMapel.map((dat, index) => (
-                  <tr
-                    key={index}
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                  >
+                {getById ? (
+                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th
                       scope="row"
                       className="px-10 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      {dat.nama_matapelajaran}
+                      {getById.nama_matapelajaran}
                     </th>
-                    <td className="px-10 py-4">{dat.hari}</td>
+                    <td className="px-10 py-4">{getById.hari}</td>
                     <td className="px-10 py-4">
-                      {formatTime(dat.waktu_mulai)}
+                      {formatTime(getById.waktu_mulai)}
                     </td>
                     <td className="px-10 py-4">
-                      {formatTime(dat.waktu_selesai)}
+                      {formatTime(getById.waktu_selesai)}
                     </td>
-                    <td className="px-10 py-4">{dat.nama_guru}</td>
-                    <td className="px-10 py-4">{dat.ruang_kelas}</td>
-                    <td className="px-10 py-4">{dat.metode_pembelajaran}</td>
-                    <td className="px-10 py-4">{dat.deskripsi}</td>
+                    <td className="px-10 py-4">{getById.nama_guru}</td>
+                    <td className="px-10 py-4">{getById.ruang_kelas}</td>
+                    <td className="px-10 py-4">
+                      {getById.metode_pembelajaran}
+                    </td>
+                    <td className="px-10 py-4">{getById.deskripsi}</td>
                   </tr>
-                ))}
+                ) : (
+                  <tr>
+                    <td className="text-center px-10 py-4 text-gray-500">
+                      Data Tidak Ditemukan
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

@@ -36,15 +36,29 @@ export default function NavbarDashboard() {
   }, []);
 
   // Filter daftar sidebar berdasarkan role
-  const filteredSidebarList =
-    role === "student"
-      ? sidebarList.filter(
-          (item) =>
-            item.name === "Home" ||
-            item.name === "Kelas" ||
-            item.name === "Request Kelas"
-        )
-      : sidebarList;
+  const filteredSidebarList = sidebarList.filter((item) => {
+    if (role === "student") {
+      return (
+        item.name === "Home" ||
+        item.name === "Kelas" ||
+        item.name === "Daftar Kelas"
+      );
+    } else if (role === "teacher") {
+      return item.name !== "Daftar Kelas";
+    }
+
+    return true;
+  });
+
+  // const filteredSidebarList =
+  //   role === "student"
+  //     ? sidebarList.filter(
+  //         (item) =>
+  //           item.name === "Home" ||
+  //           item.name === "Kelas" ||
+  //           item.name === "Daftar Kelas"
+  //       )
+  //     : sidebarList;
 
   return (
     <>
